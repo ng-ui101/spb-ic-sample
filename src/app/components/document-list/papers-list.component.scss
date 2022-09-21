@@ -1,0 +1,14 @@
+.papers-list {
+    display: grid;
+
+    &__cell {
+        &--is-archival {
+            background-color: green;
+        }
+    }
+}
+
+table {
+    width: 100%;
+}
+
