@@ -13,8 +13,11 @@ export class ControlPanelComponent implements OnInit {
 
     @Output() public paperTypeIsChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() public idIsChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public archivalVisibilityIsChanged: EventEmitter<any> = new EventEmitter<any>();
 
     public PaperType = PaperType;
+
+    public showArchival: boolean = true;
 
     public searchForm = this._formBuilder.group({
         paperId: '',
@@ -39,5 +42,10 @@ export class ControlPanelComponent implements OnInit {
     public clearSearchString() {
         this.searchForm.patchValue({paperId: ''});
         this.idIsChanged.emit(this.searchForm.value.paperId);
+    }
+
+    public changeArchivalVisibility() {
+        this.showArchival = !this.showArchival;
+        this.archivalVisibilityIsChanged.emit(this.showArchival);
     }
 }

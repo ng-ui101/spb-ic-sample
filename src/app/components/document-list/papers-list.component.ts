@@ -24,6 +24,7 @@ export class PapersListComponent implements OnInit, AfterViewInit {
 
     private _currentPaperType: PaperType | string = '';
     private _currentIdSearchString: string = '';
+    private _showArchival: boolean = true;
 
     constructor(
         private _liveAnnouncer: LiveAnnouncer,
@@ -33,7 +34,7 @@ export class PapersListComponent implements OnInit, AfterViewInit {
 
     public ngOnInit(): void {
         this.dataSource = new PapersDataSource(this._papersService);
-        this.dataSource.loadPapers('', 'asc', '', 0, 5);
+        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
     }
 
     public ngAfterViewInit() {
@@ -52,18 +53,26 @@ export class PapersListComponent implements OnInit, AfterViewInit {
             this._sort.active,
             this._sort.direction,
             this._paginator.pageIndex,
-            this._paginator.pageSize
+            this._paginator.pageSize,
+            this._currentPaperType,
+            this._currentIdSearchString,
+            this._showArchival
         );
     }
 
     public searchByPaperType(type: PaperType) {
         this._currentPaperType = type;
-        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString);
+        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
     }
 
     public searchById(id: string) {
         this._currentIdSearchString = id;
-        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString);
+        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+    }
+
+    public searchArchival(show: boolean) {
+        this._showArchival = show;
+        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
     }
 
     public announceSortChange(sortState: Sort) {

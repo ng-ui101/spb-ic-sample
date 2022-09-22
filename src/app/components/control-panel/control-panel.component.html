@@ -27,5 +27,11 @@
         <button mat-flat-button color="warn">Удалить</button>
     </div>
 
-    <mat-checkbox class="archival-checkbox">Показать архивные</mat-checkbox>
+    <mat-checkbox
+        class="archival-checkbox"
+        [checked]="showArchival"
+        (change)="changeArchivalVisibility()"
+    >
+        Показать архивные
+    </mat-checkbox>
 </section>

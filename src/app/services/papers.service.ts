@@ -16,7 +16,7 @@ export class PapersService {
         this._url = this._environmentService.getValue('apiUrl');
     }
 
-    private _setHttpParams(q: string, sort: string, order: string, page: number, limit: number, type: string, paperId: string) {
+    private _setHttpParams(q: string, sort: string, order: string, page: number, limit: number, type: string, paperId: string, showArchival: boolean) {
         let params = new HttpParams()
             .set('_page', page.toString())
             .set('_limit', limit.toString());
@@ -37,6 +37,10 @@ export class PapersService {
             params = params.append('paperId_like', paperId);
         }
 
+        if (!showArchival) {
+            params = params.append('isArchival_ne', true);
+        }
+
         return params;
     }
 
@@ -47,10 +51,11 @@ export class PapersService {
         page = 0,
         limit = 3,
         type = '',
-        paperId = ''
+        paperId = '',
+        showArchival = false
     ): Observable<HttpResponse<any>> {
         return this.http.get(`${this._url}/papers`, {
-            params: this._setHttpParams(q, sort, order, page, limit, type, paperId),
+            params: this._setHttpParams(q, sort, order, page, limit, type, paperId, showArchival),
             // to get the number of records:
             observe: 'response'
         }).pipe(

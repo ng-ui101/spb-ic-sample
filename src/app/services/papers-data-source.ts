@@ -38,13 +38,18 @@ export class PapersDataSource implements DataSource<IPaper> {
         page = 0,
         limit = 3,
         type = '',
-        paperId = ''
+        paperId = '',
+        showArchival = false
     ) {
         // json-server fix:
         page += 1;
         this.loadingSubject.next(true);
 
-        this._papersService.getPapers(q, sort, order, page, limit, type, paperId)
+        if (paperId !== '') {
+            paperId = `^${paperId}`;
+        }
+
+        this._papersService.getPapers(q, sort, order, page, limit, type, paperId, showArchival)
             .pipe(
                 catchError(() => of([])),
                 map((papers) => papers as HttpResponse<any>),
