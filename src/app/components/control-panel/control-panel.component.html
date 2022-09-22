@@ -1,7 +1,7 @@
 <form class="control-panel__search-section" [formGroup]="searchForm" (ngSubmit)="searchByID()">
     <mat-form-field appearance="fill">
         <mat-label>Вид документа:</mat-label>
-        <mat-select (valueChange)="changePaperType($event)">
+        <mat-select (valueChange)="changePaperType($event)" [value]="currentPaperType">
             <mat-option *ngFor="let paper of PaperType | keyvalue" [value]="paper.value">
                 {{paper.value | paperName}}
             </mat-option>

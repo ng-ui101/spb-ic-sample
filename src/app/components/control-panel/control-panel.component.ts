@@ -15,6 +15,8 @@ export class ControlPanelComponent implements OnDestroy {
     @HostBinding('class.control-panel') private _controlPanel = true;
 
     @Input() public currentPaper: IPaper = null;
+    @Input() public showArchival: boolean = false;
+    @Input() public currentPaperType: PaperType | string = '';
 
     @Output() public paperTypeIsChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() public idIsChanged: EventEmitter<any> = new EventEmitter<any>();
@@ -25,7 +27,6 @@ export class ControlPanelComponent implements OnDestroy {
 
     public PaperType = PaperType;
 
-    public showArchival: boolean = true;
 
     public searchForm = this._formBuilder.group({
         paperId: '',
@@ -54,6 +55,11 @@ export class ControlPanelComponent implements OnDestroy {
     public clearSearchString() {
         this.searchForm.patchValue({paperId: ''});
         this.idIsChanged.emit(this.searchForm.value.paperId);
+
+        this.paperTypeIsChanged.emit('');
+
+        this.showArchival = false;
+        this.archivalVisibilityIsChanged.emit(this.showArchival);
     }
 
     public changeArchivalVisibility() {

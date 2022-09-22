@@ -23,10 +23,10 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
     public dataSource: PapersDataSource;
     public selectedRowIndex: number = null;
     public selectedPaper: IPaper = null;
+    public showArchival: boolean = false;
+    public currentPaperType: PaperType | string = '';
 
-    private _currentPaperType: PaperType | string = '';
     private _currentIdSearchString: string = '';
-    private _showArchival: boolean = true;
 
     private _sortSub: Subscription = Subscription.EMPTY;
     private _sortPaginatorSub: Subscription = Subscription.EMPTY;
@@ -39,7 +39,7 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public ngOnInit(): void {
         this.dataSource = new PapersDataSource(this._papersService);
-        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
     }
 
     public ngOnDestroy(): void {
@@ -66,9 +66,9 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
             this._sort.direction,
             this._paginator.pageIndex,
             this._paginator.pageSize,
-            this._currentPaperType,
+            this.currentPaperType,
             this._currentIdSearchString,
-            this._showArchival
+            this.showArchival
         );
     }
 
@@ -76,8 +76,8 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectedRowIndex = null;
         this.selectedPaper = null;
 
-        this._currentPaperType = type;
-        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.currentPaperType = type;
+        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
     }
 
     public searchById(id: string) {
@@ -85,21 +85,20 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectedPaper = null;
 
         this._currentIdSearchString = id;
-        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
     }
 
     public searchArchival(show: boolean) {
         this.selectedRowIndex = null;
         this.selectedPaper = null;
 
-        this._showArchival = show;
-        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.showArchival = show;
+        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
     }
 
     public getPaper(paper: IPaper, index: number) {
         this.selectedRowIndex = index;
         this.selectedPaper = paper;
-        console.log(paper)
     }
 
     public deletePaper() {
