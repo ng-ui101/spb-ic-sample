@@ -23,8 +23,8 @@
 <section class="control-panel__edit-section">
     <div class="control-panel__edit-buttons-group">
         <button mat-flat-button class="add-button">Добавить</button>
-        <button mat-flat-button color="primary">Редактировать</button>
-        <button mat-flat-button color="warn">Удалить</button>
+        <button mat-flat-button color="primary" [disabled]="!currentPaper">Редактировать</button>
+        <button mat-flat-button color="warn" [disabled]="!currentPaper" (click)="delete()">Удалить</button>
     </div>
 
     <mat-checkbox

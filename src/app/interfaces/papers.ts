@@ -1,11 +1,12 @@
 export interface IPaper {
+    id: string;
     type: PaperType;
     serial?: string;
     paperId: string;
     issueDate?: Date;
     issuingDepartment?: IDepartment;
     isMain?: boolean;
-    isArchival?: boolean;
+    isArchival: boolean;
 }
 
 export interface IDepartment {

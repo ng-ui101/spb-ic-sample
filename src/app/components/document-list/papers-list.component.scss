@@ -1,9 +1,15 @@
 .papers-list {
     display: grid;
 
-    &__cell {
+    &__row {
+        cursor: pointer;
+
         &--is-archival {
             background-color: green;
+        }
+
+        &--is-selected {
+            background-color: darkslategrey;
         }
     }
 }

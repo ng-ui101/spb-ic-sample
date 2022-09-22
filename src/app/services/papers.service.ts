@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {EnvironmentService} from "./environment.service";
+import {IPaper} from "../interfaces/papers";
 
 @Injectable({
     providedIn: 'root'
@@ -54,12 +55,18 @@ export class PapersService {
         paperId = '',
         showArchival = false
     ): Observable<HttpResponse<any>> {
-        return this.http.get(`${this._url}/papers`, {
+        /*
+        * '/data', because with '/papers' url json-server will delete all papers
+        * see bug info: https://github.com/typicode/json-server/issues/885
+        */
+        return this.http.get(`${this._url}/data`, {
             params: this._setHttpParams(q, sort, order, page, limit, type, paperId, showArchival),
             // to get the number of records:
             observe: 'response'
-        }).pipe(
-            map((res) => res),
-        );
+        });
+    }
+
+    public deletePaper(paper: IPaper) {
+        return this.http.delete(`${this._url}/data/${paper.id}`);
     }
 }
