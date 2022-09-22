@@ -1,4 +1,4 @@
-$yellow: #f0c449;
+@import '../../../styles/variables.scss';
 
 .control-panel {
     display: grid;
@@ -9,7 +9,7 @@ $yellow: #f0c449;
         position: relative;
         display: grid;
         gap: 8px;
-        grid-template-columns: 3fr 2fr 1fr;
+        grid-template-columns: 3fr 2fr 168px;
     }
 
     &__search-buttons-group {
@@ -28,7 +28,7 @@ $yellow: #f0c449;
     &__edit-buttons-group {
         display: flex;
         gap: 8px;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
 }
 
@@ -36,6 +36,3 @@ $yellow: #f0c449;
     background-color: $yellow;
 }
 
-.archival-checkbox .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-    background-color: $yellow;
-}

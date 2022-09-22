@@ -4,14 +4,10 @@ export interface IPaper {
     serial?: string;
     paperId: string;
     issueDate?: Date;
-    issuingDepartment?: IDepartment;
+    issuingDepartment?: string;
+    departmentCode: string;
     isMain?: boolean;
     isArchival: boolean;
-}
-
-export interface IDepartment {
-    name: string;
-    departmentCode: string;
 }
 
 export enum PaperType {

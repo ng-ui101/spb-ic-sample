@@ -8,7 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
-import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {ENVIRONMENT} from "./services/environment.service";
 import {environment} from "../environments/environment";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -20,13 +20,19 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ReactiveFormsModule} from "@angular/forms";
+import { PaperEditDialogComponent } from './components/paper-edit-dialog/paper-edit-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatIconModule} from "@angular/material/icon";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
     declarations: [
         AppComponent,
         PapersListComponent,
         PaperNamePipe,
-        ControlPanelComponent
+        ControlPanelComponent,
+        PaperEditDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +48,11 @@ import {ReactiveFormsModule} from "@angular/forms";
         MatInputModule,
         MatButtonModule,
         MatCheckboxModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     providers: [{ provide: ENVIRONMENT, useValue: environment }],
     bootstrap: [AppComponent]

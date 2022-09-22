@@ -1,0 +1,78 @@
+<div class="modal-dialog__header">
+    <h3 mat-dialog-title>Документ</h3>
+    <button mat-icon-button (click)="exit()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<form class="modal-dialog-form" [formGroup]="paperForm" (ngSubmit)="confirm()">
+    <mat-checkbox
+        class="modal-dialog-form__main-paper"
+        formControlName="isMain"
+        cdkFocusInitial
+        [checked]="paperForm.value.isMain"
+    >
+        Основной документ, удостоверяющий личность
+    </mat-checkbox>
+
+    <mat-checkbox
+        class="modal-dialog-form__archival-paper"
+        formControlName="isArchival"
+        [checked]="paperForm.value.isArchival"
+    >
+        Архивный документ
+    </mat-checkbox>
+
+    <mat-form-field appearance="fill" class="modal-dialog-form__paper-type">
+        <mat-label>Вид документа:</mat-label>
+        <mat-select (valueChange)="changePaperType($event)" formControlName="type" required>
+            <mat-option *ngFor="let paper of PaperType | keyvalue" [value]="paper.value">
+                {{paper.value | paperName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="modal-dialog-form__serial">
+        <mat-label>Серия:</mat-label>
+        <input formControlName="serial" matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="modal-dialog-form__paper-id">
+        <mat-label>Номер:</mat-label>
+        <input formControlName="paperId" required matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="modal-dialog-form__date">
+        <mat-label>Дата выдачи</mat-label>
+        <input matInput [matDatepicker]="datepicker" placeholder="ДД.ММ.ГГГГ" formControlName="issueDate">
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+            </mat-datepicker-actions>
+        </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="modal-dialog-form__department">
+        <mat-label>Организация, выдавшая документ:</mat-label>
+        <mat-select (valueChange)="changePaperType($event)" formControlName="issuingDepartment">
+            <mat-option *ngFor="let department of departments" [value]="department">
+                {{department}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="modal-dialog-form__department-code">
+        <mat-label>Код подразделения:</mat-label>
+        <input formControlName="departmentCode" matInput>
+    </mat-form-field>
+
+    <div mat-dialog-actions class="modal-dialog-form__actions">
+        <button mat-button mat-flat-button color="primary" type="submit" [disabled]="!paperForm.valid">Сохранить</button>
+        <button mat-button (click)="exit()">Выход</button>
+    </div>
+</form>
+
+<!--<div mat-dialog-content>{{data | json}}</div>-->
+

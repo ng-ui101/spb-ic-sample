@@ -16,7 +16,7 @@
         <ng-container matColumnDef="isMain" >
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-               <i *ngIf="element.isMain">'YES'</i>
+               <mat-icon *ngIf="element.isMain">done_outline</mat-icon>
             </td>
         </ng-container>
 
