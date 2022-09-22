@@ -1,0 +1,37 @@
+{
+  "data": [
+    {
+      "id": "1d2827f9-3eb4-4369-8550-1be2175fd884",
+      "isMain": false,
+      "isArchival": false,
+      "type": "birth-certificate",
+      "serial": "001",
+      "paperId": "001",
+      "issueDate": "2022-09-22T20:55:28.573Z",
+      "issuingDepartment": "ГУ МВД Первого района",
+      "departmentCode": "111-222"
+    },
+    {
+      "id": "ed3d6181-7cff-4763-a352-5f651b3fd87d",
+      "isMain": true,
+      "isArchival": false,
+      "type": "international-passport",
+      "serial": "222",
+      "paperId": "333",
+      "issueDate": "2022-09-06T21:00:00.000Z",
+      "issuingDepartment": "ГУ МВД Второго района",
+      "departmentCode": "333-444"
+    },
+    {
+      "id": "4368352f-8510-475f-bd9f-b3d58fc6385a",
+      "isMain": false,
+      "isArchival": true,
+      "type": "passport",
+      "serial": "777",
+      "paperId": "777",
+      "issueDate": "2022-09-22T20:56:09.440Z",
+      "issuingDepartment": "ГУ МВД Третьего района",
+      "departmentCode": "888-999"
+    }
+  ]
+}

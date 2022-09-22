@@ -4,10 +4,11 @@
     (idIsChanged)="searchById($event)"
     (archivalVisibilityIsChanged)="searchArchival($event)"
     (deletePaper)="deletePaper()"
+    (changePaper)="updatePaper($event)"
+    (createPaper)="createPaper($event)"
 ></app-control-panel>
 
 <div class="mat-elevation-z8">
-    <!--    TODO: move spinner right-->
     <div class="spinner-container" *ngIf="dataSource.loading$ | async">
         <mat-spinner></mat-spinner>
     </div>
@@ -16,7 +17,7 @@
         <ng-container matColumnDef="isMain" >
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-               <mat-icon *ngIf="element.isMain">done_outline</mat-icon>
+               <mat-icon *ngIf="element.isMain">done</mat-icon>
             </td>
         </ng-container>
 
@@ -44,7 +45,7 @@
         <ng-container matColumnDef="issueDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Сортировать по дате выдачи"> Дата выдачи </th>
             <td mat-cell *matCellDef="let element">
-                {{element.issueDate}}
+                {{element.issueDate | date: 'dd.MM.yyyy'}}
             </td>
         </ng-container>
 

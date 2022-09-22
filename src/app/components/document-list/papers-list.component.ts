@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, HostBinding, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, HostBinding, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, Sort} from "@angular/material/sort";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {PapersService} from "../../services/papers.service";
 import {PapersDataSource} from "../../services/papers-data-source";
-import {merge, tap} from "rxjs";
+import {merge, Subscription, tap} from "rxjs";
 import {IPaper, PaperType} from "../../interfaces/papers";
 
 @Component({
@@ -13,7 +13,7 @@ import {IPaper, PaperType} from "../../interfaces/papers";
     styleUrls: ['./papers-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class PapersListComponent implements OnInit, AfterViewInit {
+export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
     @HostBinding('class.papers-list') private _papersList = true;
 
     @ViewChild(MatPaginator) private _paginator: MatPaginator;
@@ -28,6 +28,9 @@ export class PapersListComponent implements OnInit, AfterViewInit {
     private _currentIdSearchString: string = '';
     private _showArchival: boolean = true;
 
+    private _sortSub: Subscription = Subscription.EMPTY;
+    private _sortPaginatorSub: Subscription = Subscription.EMPTY;
+
     constructor(
         private _liveAnnouncer: LiveAnnouncer,
         private _papersService: PapersService
@@ -36,13 +39,18 @@ export class PapersListComponent implements OnInit, AfterViewInit {
 
     public ngOnInit(): void {
         this.dataSource = new PapersDataSource(this._papersService);
-        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+    }
+
+    public ngOnDestroy(): void {
+        this._sortSub.unsubscribe();
+        this._sortPaginatorSub.unsubscribe();
     }
 
     public ngAfterViewInit() {
-        this._sort.sortChange.subscribe(() => this._paginator.pageIndex = 0);
+        this._sortSub = this._sort.sortChange.subscribe(() => this._paginator.pageIndex = 0);
 
-        merge(this._sort.sortChange, this._paginator.page)
+        this._sortPaginatorSub = merge(this._sort.sortChange, this._paginator.page)
             .pipe(
                 tap(() => this.loadPage())
             )
@@ -54,7 +62,6 @@ export class PapersListComponent implements OnInit, AfterViewInit {
         this.selectedPaper = null;
 
         this.dataSource.loadPapers(
-            '',
             this._sort.active,
             this._sort.direction,
             this._paginator.pageIndex,
@@ -70,7 +77,7 @@ export class PapersListComponent implements OnInit, AfterViewInit {
         this.selectedPaper = null;
 
         this._currentPaperType = type;
-        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
     }
 
     public searchById(id: string) {
@@ -78,7 +85,7 @@ export class PapersListComponent implements OnInit, AfterViewInit {
         this.selectedPaper = null;
 
         this._currentIdSearchString = id;
-        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
     }
 
     public searchArchival(show: boolean) {
@@ -86,7 +93,7 @@ export class PapersListComponent implements OnInit, AfterViewInit {
         this.selectedPaper = null;
 
         this._showArchival = show;
-        this.dataSource.loadPapers('', 'asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
+        this.dataSource.loadPapers('asc', '', 0, 5, this._currentPaperType, this._currentIdSearchString, this._showArchival);
     }
 
     public getPaper(paper: IPaper, index: number) {
@@ -97,6 +104,14 @@ export class PapersListComponent implements OnInit, AfterViewInit {
 
     public deletePaper() {
         this._papersService.deletePaper(this.selectedPaper).subscribe(() => this.loadPage());
+    }
+
+    public updatePaper(formData: any) {
+        this._papersService.updatePaper(formData).subscribe(() => this.loadPage());
+    }
+
+    public createPaper(formData: any) {
+        this._papersService.addPaper(formData).subscribe(() => this.loadPage());
     }
 
     public announceSortChange(sortState: Sort) {

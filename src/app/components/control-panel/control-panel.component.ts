@@ -1,8 +1,9 @@
-import {Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, OnDestroy, Output, ViewEncapsulation} from '@angular/core';
 import {IPaper, PaperType} from "../../interfaces/papers";
 import {FormBuilder} from "@angular/forms";
 import {PaperEditDialogComponent} from "../paper-edit-dialog/paper-edit-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-control-panel',
@@ -10,7 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
     styleUrls: ['./control-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class ControlPanelComponent implements OnInit {
+export class ControlPanelComponent implements OnDestroy {
     @HostBinding('class.control-panel') private _controlPanel = true;
 
     @Input() public currentPaper: IPaper = null;
@@ -19,6 +20,8 @@ export class ControlPanelComponent implements OnInit {
     @Output() public idIsChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() public archivalVisibilityIsChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() public deletePaper: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public createPaper: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public changePaper: EventEmitter<any> = new EventEmitter<any>();
 
     public PaperType = PaperType;
 
@@ -28,13 +31,16 @@ export class ControlPanelComponent implements OnInit {
         paperId: '',
     });
 
+    private _sub: Subscription = Subscription.EMPTY;
+
     constructor(
         public dialog: MatDialog,
         private _formBuilder: FormBuilder,
     ) {
     }
 
-    ngOnInit(): void {
+    public ngOnDestroy(): void {
+        this._sub.unsubscribe();
     }
 
     public searchByID() {
@@ -74,8 +80,16 @@ export class ControlPanelComponent implements OnInit {
             panelClass: 'dialog-layout'
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+        this._sub = dialogRef.afterClosed().subscribe((formData) => {
+            if (!formData) {
+                return;
+            }
+
+            if (formData.id) {
+                this.changePaper.emit(formData);
+            } else {
+                this.createPaper.emit(formData);
+            }
         });
     }
 }

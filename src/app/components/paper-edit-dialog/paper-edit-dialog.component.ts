@@ -1,6 +1,6 @@
-import {Component, HostBinding, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, HostBinding, Inject, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {IPaper, PaperType} from "../../interfaces/papers";
+import {IPaper, PaperType, departments} from "../../interfaces/papers";
 import {FormBuilder} from "@angular/forms";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
@@ -20,14 +20,16 @@ import {CUSTOM_DATE_FORMAT} from "./custom-date-format";
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class PaperEditDialogComponent implements OnInit {
+export class PaperEditDialogComponent {
     @HostBinding('class.modal-dialog') private _modalDialog = true;
 
     public paper: IPaper = null;
-    public departments: string[] = null;
+    public departments: string[] = departments;
+    public codeMask = [/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
     public PaperType = PaperType;
 
     public paperForm = this._formBuilder.group({
+        id: '',
         isMain: false,
         isArchival: false,
         type: '',
@@ -44,7 +46,7 @@ export class PaperEditDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: IPaper,
     ) {
         if (data) {
-            this.paperForm.patchValue({...data});
+            this.paperForm.patchValue(data);
         } else {
             this.paperForm.patchValue({
                 issueDate: new Date()
@@ -52,16 +54,7 @@ export class PaperEditDialogComponent implements OnInit {
         }
     }
 
-    public ngOnInit(): void {
-    }
-
-    public changePaperType(type: PaperType) {
-
-    }
-
     public confirm() {
-        console.log(this.paperForm.value)
-        console.log(this.paperForm.value.issueDate.toString())
         this.dialogRef.close(this.paperForm.value);
     }
 

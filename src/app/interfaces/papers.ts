@@ -5,7 +5,7 @@ export interface IPaper {
     paperId: string;
     issueDate?: Date;
     issuingDepartment?: string;
-    departmentCode: string;
+    departmentCode?: string;
     isMain?: boolean;
     isArchival: boolean;
 }
@@ -16,10 +16,8 @@ export enum PaperType {
     BirthCertificate = 'birth-certificate',
 }
 
-export function toPaper(paper: any) {
-    return {
-        ...paper,
-        isMain: paper?.isMain === 'true',
-        isArchival: paper?.isArchival === 'true'
-    }
-}
+export const departments: string[] = [
+    'ГУ МВД Первого района',
+    'ГУ МВД Второго района',
+    'ГУ МВД Третьего района'
+]

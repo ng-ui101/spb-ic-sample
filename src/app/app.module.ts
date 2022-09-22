@@ -25,6 +25,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import {MatNativeDateModule} from "@angular/material/core";
         MatIconModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        TextMaskModule
     ],
     providers: [{ provide: ENVIRONMENT, useValue: environment }],
     bootstrap: [AppComponent]

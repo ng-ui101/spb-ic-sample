@@ -1,5 +1,5 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
-import {IPaper, toPaper} from "../interfaces/papers";
+import {IPaper} from "../interfaces/papers";
 import {BehaviorSubject, catchError, finalize, map, Observable, of} from "rxjs";
 import {PapersService} from "./papers.service";
 import {HttpResponse} from "@angular/common/http";
@@ -32,7 +32,6 @@ export class PapersDataSource implements DataSource<IPaper> {
     }
 
     public loadPapers(
-        q = '',
         sort = '',
         order = 'asc',
         page = 0,
@@ -49,14 +48,14 @@ export class PapersDataSource implements DataSource<IPaper> {
             paperId = `^${paperId}`;
         }
 
-        this._papersService.getPapers(q, sort, order, page, limit, type, paperId, showArchival)
+        this._papersService.getPapers(sort, order, page, limit, type, paperId, showArchival)
             .pipe(
                 catchError(() => of([])),
                 map((papers) => papers as HttpResponse<any>),
                 finalize(() => this.loadingSubject.next(false)),
             ).subscribe((papers) => {
                 this._total = +papers.headers.getAll('X-Total-Count');
-                this.papersSubject.next(papers['body'].map((paper: any) => toPaper(paper)));
+                this.papersSubject.next(papers['body']);
             }
         );
     }
