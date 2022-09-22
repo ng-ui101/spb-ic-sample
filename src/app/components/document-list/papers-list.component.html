@@ -1,3 +1,8 @@
+<app-control-panel
+    (paperTypeIsChanged)="searchByPaperType($event)"
+    (idIsChanged)="searchById($event)"
+></app-control-panel>
+
 <div class="mat-elevation-z8">
     <!--    TODO: move spinner right-->
     <div class="spinner-container" *ngIf="dataSource.loading$ | async">
@@ -7,29 +12,62 @@
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
         <ng-container matColumnDef="isMain" >
             <th mat-header-cell *matHeaderCellDef></th>
-            <td class="papers-list__cell" [class.papers-list__cell--is-archival]="element.isArchival" mat-cell *matCellDef="let element">
-                <i *ngIf="element.isMain">'YES'</i>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="papers-list__cell"
+                [class.papers-list__cell--is-archival]="element.isArchival"
+            >
+               <i *ngIf="element.isMain">'YES'</i>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by paper type"> Вид документа </th>
-            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Сортировать по виду документа"> Вид документа </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="papers-list__cell"
+                [class.papers-list__cell--is-archival]="element.isArchival"
+            >
+                {{element.type | paperName}}
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="serial">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by serial of paper"> Серия </th>
-            <td mat-cell *matCellDef="let element"> {{element.serial}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Сортировать по серии документа"> Серия </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="papers-list__cell"
+                [class.papers-list__cell--is-archival]="element.isArchival"
+            >
+                {{element.serial}}
+            </td>
         </ng-container>
 
-        <ng-container matColumnDef="paperID">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by paper Id"> Номер </th>
-            <td mat-cell *matCellDef="let element"> {{element.paperID}} </td>
+        <ng-container matColumnDef="paperId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Сортировать по номеру документа"> Номер </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="papers-list__cell"
+                [class.papers-list__cell--is-archival]="element.isArchival"
+            >
+                {{element.paperId}}
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="issueDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by paper issue date"> Дата выдачи </th>
-            <td mat-cell *matCellDef="let element"> {{element.issueDate}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Сортировать по дате выдачи"> Дата выдачи </th>
+            <td
+                mat-cell
+                *matCellDef="let element"
+                class="papers-list__cell"
+                [class.papers-list__cell--is-archival]="element.isArchival"
+            >
+                {{element.issueDate}}
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

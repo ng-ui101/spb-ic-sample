@@ -1,0 +1,41 @@
+$yellow: #f0c449;
+
+.control-panel {
+    display: grid;
+    padding: 16px;
+    gap: 16px;
+
+    &__search-section {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        grid-template-columns: 3fr 2fr 1fr;
+    }
+
+    &__search-buttons-group {
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 16px;
+        gap: 8px;
+    }
+
+    &__edit-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__edit-buttons-group {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-start;
+    }
+}
+
+.add-button {
+    background-color: $yellow;
+}
+
+.archival-checkbox .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: $yellow;
+}

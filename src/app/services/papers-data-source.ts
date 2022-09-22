@@ -36,13 +36,15 @@ export class PapersDataSource implements DataSource<IPaper> {
         sort = '',
         order = 'asc',
         page = 0,
-        limit = 3
+        limit = 3,
+        type = '',
+        paperId = ''
     ) {
         // json-server fix:
         page += 1;
         this.loadingSubject.next(true);
 
-        this._papersService.getPapers(q, sort, order, page, limit)
+        this._papersService.getPapers(q, sort, order, page, limit, type, paperId)
             .pipe(
                 catchError(() => of([])),
                 map((papers) => papers as HttpResponse<any>),

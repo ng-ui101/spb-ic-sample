@@ -1,0 +1,31 @@
+<form class="control-panel__search-section" [formGroup]="searchForm" (ngSubmit)="searchByID()">
+    <mat-form-field appearance="fill">
+        <mat-label>Вид документа:</mat-label>
+        <mat-select (valueChange)="changePaperType($event)">
+            <mat-option *ngFor="let paper of PaperType | keyvalue" [value]="paper.value">
+                {{paper.value | paperName}}
+            </mat-option>
+            <mat-option [value]="">все документы</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Номер:</mat-label>
+        <input formControlName="paperId" matInput>
+    </mat-form-field>
+
+    <div class="control-panel__search-buttons-group">
+        <button mat-flat-button color="primary" type="submit">Найти</button>
+        <button mat-flat-button color="warn" (click)="clearSearchString()">Очистить</button>
+    </div>
+</form>
+
+<section class="control-panel__edit-section">
+    <div class="control-panel__edit-buttons-group">
+        <button mat-flat-button class="add-button">Добавить</button>
+        <button mat-flat-button color="primary">Редактировать</button>
+        <button mat-flat-button color="warn">Удалить</button>
+    </div>
+
+    <mat-checkbox class="archival-checkbox">Показать архивные</mat-checkbox>
+</section>

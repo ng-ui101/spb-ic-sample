@@ -12,11 +12,21 @@ import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
 import {ENVIRONMENT} from "./services/environment.service";
 import {environment} from "../environments/environment";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { PaperNamePipe } from './pipes/paper-name.pipe';
+import { ControlPanelComponent } from './components/control-panel/control-panel.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [
         AppComponent,
-        PapersListComponent
+        PapersListComponent,
+        PaperNamePipe,
+        ControlPanelComponent
     ],
     imports: [
         BrowserModule,
@@ -26,7 +36,13 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatPaginatorModule,
         MatSortModule,
         HttpClientModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        ReactiveFormsModule
     ],
     providers: [{ provide: ENVIRONMENT, useValue: environment }],
     bootstrap: [AppComponent]

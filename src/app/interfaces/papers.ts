@@ -1,7 +1,7 @@
 export interface IPaper {
     type: PaperType;
     serial?: string;
-    paperID: string;
+    paperId: string;
     issueDate?: Date;
     issuingDepartment?: IDepartment;
     isMain?: boolean;
