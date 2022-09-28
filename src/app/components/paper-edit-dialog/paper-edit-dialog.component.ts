@@ -4,7 +4,7 @@ import {IPaper, PaperType, departments} from "../../interfaces/papers";
 import {FormBuilder} from "@angular/forms";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {CUSTOM_DATE_FORMAT} from "./custom-date-format";
+import {CUSTOM_DATE_FORMAT} from "../../localization/custom-date-format";
 
 @Component({
     selector: 'app-paper-edit-dialog',

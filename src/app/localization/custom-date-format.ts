@@ -1,9 +1,9 @@
 export const CUSTOM_DATE_FORMAT = {
     parse: {
-        dateInput: 'LL',
+        dateInput: 'DD.MM.YYYY',
     },
     display: {
-        dateInput: 'DD-MM-YYYY',
+        dateInput: 'DD.MM.YYYY',
         monthYearLabel: 'YYYY',
         dateA11yLabel: 'LL',
         monthYearA11yLabel: 'YYYY',

@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {PapersListComponent} from './components/document-list/papers-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {HttpClientModule} from "@angular/common/http";
 import {ENVIRONMENT} from "./services/environment.service";
@@ -26,6 +26,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import { TextMaskModule } from 'angular2-text-mask';
+import {getRuPaginator} from "./localization/mat-table-paginator";
 
 @NgModule({
     declarations: [
@@ -56,7 +57,10 @@ import { TextMaskModule } from 'angular2-text-mask';
         MatNativeDateModule,
         TextMaskModule
     ],
-    providers: [{ provide: ENVIRONMENT, useValue: environment }],
+    providers: [
+        { provide: ENVIRONMENT, useValue: environment },
+        { provide: MatPaginatorIntl, useValue: getRuPaginator() }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
