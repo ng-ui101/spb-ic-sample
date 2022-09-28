@@ -12,20 +12,20 @@ import {HttpClientModule} from "@angular/common/http";
 import {ENVIRONMENT} from "./services/environment.service";
 import {environment} from "../environments/environment";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { PaperNamePipe } from './pipes/paper-name.pipe';
-import { ControlPanelComponent } from './components/control-panel/control-panel.component';
+import {PaperNamePipe} from './pipes/paper-name.pipe';
+import {ControlPanelComponent} from './components/control-panel/control-panel.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ReactiveFormsModule} from "@angular/forms";
-import { PaperEditDialogComponent } from './components/paper-edit-dialog/paper-edit-dialog.component';
+import {PaperEditDialogComponent} from './components/paper-edit-dialog/paper-edit-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
-import { TextMaskModule } from 'angular2-text-mask';
+import {TextMaskModule} from 'angular2-text-mask';
 import {getRuPaginator} from "./localization/mat-table-paginator";
 
 @NgModule({
@@ -58,8 +58,8 @@ import {getRuPaginator} from "./localization/mat-table-paginator";
         TextMaskModule
     ],
     providers: [
-        { provide: ENVIRONMENT, useValue: environment },
-        { provide: MatPaginatorIntl, useValue: getRuPaginator() }
+        {provide: ENVIRONMENT, useValue: environment},
+        {provide: MatPaginatorIntl, useValue: getRuPaginator()}
     ],
     bootstrap: [AppComponent]
 })

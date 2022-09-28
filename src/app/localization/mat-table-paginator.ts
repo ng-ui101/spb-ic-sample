@@ -1,7 +1,7 @@
 import {MatPaginatorIntl} from "@angular/material/paginator";
 
 function rangeLabel(page: number, pageSize: number, length: number) {
-    if (length == 0 || pageSize == 0) { return `0 из ${length}`; }
+    if (length === 0 || pageSize === 0) { return `0 из ${length}`; }
 
     length = Math.max(length, 0);
 
