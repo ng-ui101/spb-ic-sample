@@ -7,7 +7,7 @@
       "type": "birth-certificate",
       "serial": "001",
       "paperId": "001",
-      "issueDate": "2022-09-22T20:55:28.573Z",
+      "issueDate": "2022-09-22",
       "issuingDepartment": "ГУ МВД Первого района",
       "departmentCode": "111-222"
     },
@@ -18,7 +18,7 @@
       "type": "international-passport",
       "serial": "222",
       "paperId": "333",
-      "issueDate": "2022-09-06T21:00:00.000Z",
+      "issueDate": "2022-09-07",
       "issuingDepartment": "ГУ МВД Второго района",
       "departmentCode": "333-444"
     },
@@ -29,7 +29,7 @@
       "type": "passport",
       "serial": "777",
       "paperId": "777",
-      "issueDate": "2022-09-22T20:56:09.440Z",
+      "issueDate": "2022-09-19",
       "issuingDepartment": "ГУ МВД Третьего района",
       "departmentCode": "888-999"
     }
