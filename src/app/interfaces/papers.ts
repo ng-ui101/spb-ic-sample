@@ -30,9 +30,3 @@ export enum PaperType {
     InternationalPassport = 'international-passport',
     BirthCertificate = 'birth-certificate',
 }
-
-export const departments: string[] = [
-    'ГУ МВД Первого района',
-    'ГУ МВД Второго района',
-    'ГУ МВД Третьего района'
-]

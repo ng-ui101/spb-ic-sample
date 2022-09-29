@@ -23,10 +23,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {PaperEditDialogComponent} from './components/paper-edit-dialog/paper-edit-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatIconModule} from "@angular/material/icon";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
 import {TextMaskModule} from 'angular2-text-mask';
 import {getRuPaginator} from "./localization/mat-table-paginator";
+import {DepartmentsService, DepartmentsServiceStub} from "./services/departments.service";
+import {PapersService, PapersServiceStub} from "./services/papers.service";
 
 @NgModule({
     declarations: [
@@ -53,13 +53,13 @@ import {getRuPaginator} from "./localization/mat-table-paginator";
         ReactiveFormsModule,
         MatDialogModule,
         MatIconModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
         TextMaskModule
     ],
     providers: [
         {provide: ENVIRONMENT, useValue: environment},
-        {provide: MatPaginatorIntl, useValue: getRuPaginator()}
+        {provide: MatPaginatorIntl, useValue: getRuPaginator()},
+        {provide: DepartmentsService,  useClass: DepartmentsServiceStub},
+        {provide: PapersService,  useClass: PapersServiceStub},
     ],
     bootstrap: [AppComponent]
 })

@@ -1,15 +1,36 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {EnvironmentService} from "./environment.service";
 import {IPaper, IPaperSearchParams} from "../interfaces/papers";
 import {v4 as uuid} from 'uuid';
 import {setPapersFilterParams} from "../utils/http-utils";
+import {IPapersService} from "../interfaces/services";
 
 @Injectable({
     providedIn: 'root'
 })
-export class PapersService {
+export class PapersService implements IPapersService{
+    // TODO: implement for real BE
+    public addPaper(paperData: any): Observable<Object> {
+        return undefined;
+    }
+
+    public deletePaper(paper: IPaper): Observable<Object> {
+        return undefined;
+    }
+
+    public getPapers(params: IPaperSearchParams): Observable<HttpResponse<any>> {
+        return undefined;
+    }
+
+    public updatePaper(paper: IPaper): Observable<Object> {
+        return undefined;
+    }
+}
+
+@Injectable()
+export class PapersServiceStub implements IPapersService{
 
     private readonly _url: string = null;
 
