@@ -1,5 +1,5 @@
 import {Component, EventEmitter, HostBinding, Input, OnDestroy, Output, ViewEncapsulation} from '@angular/core';
-import {IPaper, PaperType} from "../../interfaces/papers";
+import {IPaper, IPaperSearchForm, PaperType} from "../../interfaces/papers";
 import {FormBuilder} from "@angular/forms";
 import {PaperEditDialogComponent} from "../paper-edit-dialog/paper-edit-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -15,21 +15,21 @@ export class ControlPanelComponent implements OnDestroy {
     @HostBinding('class.control-panel') private _controlPanel = true;
 
     @Input() public currentPaper: IPaper = null;
-    @Input() public showArchival: boolean = false;
-    @Input() public currentPaperType: PaperType | string = '';
 
-    @Output() public paperTypeIsChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() public idIsChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() public archivalVisibilityIsChanged: EventEmitter<any> = new EventEmitter<any>();
-    @Output() public deletePaper: EventEmitter<any> = new EventEmitter<any>();
+    @Output() public search: EventEmitter<IPaperSearchForm> = new EventEmitter<IPaperSearchForm>();
+    @Output() public showArchival: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() public clearSearchResult: EventEmitter<void> = new EventEmitter<void>();
+
+    @Output() public deletePaper: EventEmitter<void> = new EventEmitter<void>();
     @Output() public createPaper: EventEmitter<any> = new EventEmitter<any>();
     @Output() public changePaper: EventEmitter<any> = new EventEmitter<any>();
 
+    public archivalIsVisible: boolean = false;
     public PaperType = PaperType;
-
 
     public searchForm = this._formBuilder.group({
         paperId: '',
+        paperType: ''
     });
 
     private _sub: Subscription = Subscription.EMPTY;
@@ -44,27 +44,19 @@ export class ControlPanelComponent implements OnDestroy {
         this._sub.unsubscribe();
     }
 
-    public searchByID() {
-        this.idIsChanged.emit(this.searchForm.value.paperId)
-    }
-
-    public changePaperType(type: PaperType) {
-        this.paperTypeIsChanged.emit(type);
+    public onSubmit() {
+        this.search.emit(this.searchForm.value as IPaperSearchForm);
     }
 
     public clearSearchString() {
-        this.searchForm.patchValue({paperId: ''});
-        this.idIsChanged.emit(this.searchForm.value.paperId);
-
-        this.paperTypeIsChanged.emit('');
-
-        this.showArchival = false;
-        this.archivalVisibilityIsChanged.emit(this.showArchival);
+        this.searchForm.patchValue({paperId: '', paperType: ''});
+        this.archivalIsVisible = false;
+        this.clearSearchResult.emit();
     }
 
     public changeArchivalVisibility() {
-        this.showArchival = !this.showArchival;
-        this.archivalVisibilityIsChanged.emit(this.showArchival);
+        this.archivalIsVisible = !this.archivalIsVisible;
+        this.showArchival.emit(this.archivalIsVisible);
     }
 
     public delete() {

@@ -44,13 +44,13 @@ export class PapersService {
     }
 
     public getPapers(
-        sort = '',
-        order = 'asc',
-        page = 0,
-        limit = 3,
-        type = '',
-        paperId = '',
-        showArchival = false
+        sort: string,
+        order: string,
+        page: number,
+        limit: number,
+        type: string,
+        paperId: string,
+        showArchival: boolean
     ): Observable<HttpResponse<any>> {
         /*
         * '/data', because with '/papers' url json-server will delete all papers

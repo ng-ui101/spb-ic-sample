@@ -1,10 +1,8 @@
 <app-control-panel
-    [showArchival]="showArchival"
     [currentPaper]="selectedPaper"
-    [currentPaperType]="currentPaperType"
-    (paperTypeIsChanged)="searchByPaperType($event)"
-    (idIsChanged)="searchById($event)"
-    (archivalVisibilityIsChanged)="searchArchival($event)"
+    (search)="search($event)"
+    (showArchival)="searchArchival($event)"
+    (clearSearchResult)="clearSearchResult()"
     (deletePaper)="deletePaper()"
     (changePaper)="updatePaper($event)"
     (createPaper)="createPaper($event)"

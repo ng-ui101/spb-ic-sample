@@ -3,9 +3,9 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, Sort} from "@angular/material/sort";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {PapersService} from "../../services/papers.service";
-import {PapersDataSource} from "../../services/papers-data-source";
+import {PapersDataSource} from "../../data-sources/papers-data-source";
 import {merge, Subscription, tap} from "rxjs";
-import {IPaper, PaperType} from "../../interfaces/papers";
+import {IPaper, IPaperSearchForm} from "../../interfaces/papers";
 
 @Component({
     selector: 'app-papers-list',
@@ -24,9 +24,11 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
     public selectedRowIndex: number = null;
     public selectedPaper: IPaper = null;
     public showArchival: boolean = false;
-    public currentPaperType: PaperType | string = '';
 
-    private _currentIdSearchString: string = '';
+    private _searchFormState: IPaperSearchForm = {
+        paperId: '',
+        paperType: ''
+    }
 
     private _sortSub: Subscription = Subscription.EMPTY;
     private _sortPaginatorSub: Subscription = Subscription.EMPTY;
@@ -39,7 +41,8 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public ngOnInit(): void {
         this.dataSource = new PapersDataSource(this._papersService);
-        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
+        this.dataSource.loadPapers('', 'asc', 0, 5,
+            this._searchFormState.paperType, this._searchFormState.paperId, this.showArchival);
     }
 
     public ngOnDestroy(): void {
@@ -53,8 +56,7 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
         this._sortPaginatorSub = merge(this._sort.sortChange, this._paginator.page)
             .pipe(
                 tap(() => this.loadPage())
-            )
-            .subscribe();
+            ).subscribe();
     }
 
     public loadPage() {
@@ -66,34 +68,32 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
             this._sort.direction,
             this._paginator.pageIndex,
             this._paginator.pageSize,
-            this.currentPaperType,
-            this._currentIdSearchString,
+            this._searchFormState.paperType,
+            this._searchFormState.paperId,
             this.showArchival
         );
     }
 
-    public searchByPaperType(type: PaperType) {
-        this.selectedRowIndex = null;
-        this.selectedPaper = null;
-
-        this.currentPaperType = type;
-        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
-    }
-
-    public searchById(id: string) {
-        this.selectedRowIndex = null;
-        this.selectedPaper = null;
-
-        this._currentIdSearchString = id;
-        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
+    public search(searchData: IPaperSearchForm) {
+        this._searchFormState = {...searchData}
+        this._paginator.pageIndex = 0
+        this.loadPage();
     }
 
     public searchArchival(show: boolean) {
-        this.selectedRowIndex = null;
-        this.selectedPaper = null;
-
         this.showArchival = show;
-        this.dataSource.loadPapers('asc', '', 0, 5, this.currentPaperType, this._currentIdSearchString, this.showArchival);
+        this._paginator.pageIndex = 0
+        this.loadPage();
+    }
+
+    public clearSearchResult() {
+        this.showArchival = false;
+        this._paginator.pageIndex = 0
+        this._searchFormState = {
+            paperId: '',
+            paperType: ''
+        };
+        this.loadPage();
     }
 
     public getPaper(paper: IPaper, index: number) {
@@ -105,8 +105,8 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
         this._papersService.deletePaper(this.selectedPaper).subscribe(() => this.loadPage());
     }
 
-    public updatePaper(formData: any) {
-        this._papersService.updatePaper(formData).subscribe(() => this.loadPage());
+    public updatePaper(paper: IPaper) {
+        this._papersService.updatePaper(paper).subscribe(() => this.loadPage());
     }
 
     public createPaper(formData: any) {

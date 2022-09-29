@@ -1,7 +1,7 @@
-<form class="control-panel__search-section" [formGroup]="searchForm" (ngSubmit)="searchByID()">
+<form class="control-panel__search-section" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
         <mat-label>Вид документа:</mat-label>
-        <mat-select (valueChange)="changePaperType($event)" [value]="currentPaperType">
+        <mat-select formControlName="paperType">
             <mat-option *ngFor="let paper of PaperType | keyvalue" [value]="paper.value">
                 {{paper.value | paperName}}
             </mat-option>
@@ -40,7 +40,7 @@
 
     <mat-checkbox
         class="archival-checkbox"
-        [checked]="showArchival"
+        [checked]="archivalIsVisible"
         (change)="changeArchivalVisibility()"
     >
         Показать архивные

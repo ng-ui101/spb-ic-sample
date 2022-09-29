@@ -10,6 +10,11 @@ export interface IPaper {
     isArchival: boolean;
 }
 
+export interface IPaperSearchForm {
+    paperId?: string;
+    paperType?: PaperType | '';
+}
+
 export enum PaperType {
     Passport = 'passport',
     InternationalPassport = 'international-passport',

@@ -1,11 +1,10 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import {IPaper} from "../interfaces/papers";
 import {BehaviorSubject, catchError, finalize, map, Observable, of} from "rxjs";
-import {PapersService} from "./papers.service";
+import {PapersService} from "../services/papers.service";
 import {HttpResponse} from "@angular/common/http";
 
 export class PapersDataSource implements DataSource<IPaper> {
-
     private papersSubject = new BehaviorSubject<IPaper[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
@@ -35,7 +34,7 @@ export class PapersDataSource implements DataSource<IPaper> {
         sort = '',
         order = 'asc',
         page = 0,
-        limit = 3,
+        limit = 5,
         type = '',
         paperId = '',
         showArchival = false
