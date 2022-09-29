@@ -45,11 +45,8 @@ export class PapersDataSource implements DataSource<IPaper> {
 
         // json-server fix:
         innerParams.page += 1;
+        
         this._loadingSubject$.next(true);
-
-        if (innerParams.paperId !== '') {
-            innerParams.paperId = `^${innerParams.paperId}`;
-        }
 
         this._papersService.getPapers(innerParams)
             .pipe(

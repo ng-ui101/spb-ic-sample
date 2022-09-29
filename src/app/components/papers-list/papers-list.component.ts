@@ -78,7 +78,10 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     public search(searchData: IPaperSearchForm) {
-        this._searchFormState = {...searchData}
+        this._searchFormState = {
+            ...searchData,
+            paperId: searchData.paperId ? `^${searchData.paperId}` : ''
+        }
         this._paginator.pageIndex = 0
         this.loadPage();
     }
