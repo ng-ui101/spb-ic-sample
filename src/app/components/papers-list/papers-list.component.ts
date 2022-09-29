@@ -41,8 +41,11 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public ngOnInit(): void {
         this.dataSource = new PapersDataSource(this._papersService);
-        this.dataSource.loadPapers('', 'asc', 0, 5,
-            this._searchFormState.paperType, this._searchFormState.paperId, this.showArchival);
+        this.dataSource.loadPapers({
+            type: this._searchFormState.paperType,
+            paperId: this._searchFormState.paperId,
+            showArchival: this.showArchival
+        } )
     }
 
     public ngOnDestroy(): void {
@@ -63,15 +66,15 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectedRowIndex = null;
         this.selectedPaper = null;
 
-        this.dataSource.loadPapers(
-            this._sort.active,
-            this._sort.direction,
-            this._paginator.pageIndex,
-            this._paginator.pageSize,
-            this._searchFormState.paperType,
-            this._searchFormState.paperId,
-            this.showArchival
-        );
+        this.dataSource.loadPapers({
+            sort: this._sort.active,
+            order: this._sort.direction,
+            page: this._paginator.pageIndex,
+            limit: this._paginator.pageSize,
+            type: this._searchFormState.paperType,
+            paperId: this._searchFormState.paperId,
+            showArchival: this.showArchival
+        });
     }
 
     public search(searchData: IPaperSearchForm) {

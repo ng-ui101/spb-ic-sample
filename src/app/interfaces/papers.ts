@@ -11,8 +11,18 @@ export interface IPaper {
 }
 
 export interface IPaperSearchForm {
+    paperId: string;
+    paperType: PaperType | '';
+}
+
+export interface IPaperSearchParams {
+    page?: number;
+    limit?: number;
+    sort?: string;
+    order?: 'asc' | 'desc' | '';
+    type?: string;
     paperId?: string;
-    paperType?: PaperType | '';
+    showArchival?: boolean;
 }
 
 export enum PaperType {

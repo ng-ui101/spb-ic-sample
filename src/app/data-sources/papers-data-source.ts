@@ -1,5 +1,5 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
-import {IPaper} from "../interfaces/papers";
+import {IPaper, IPaperSearchParams} from "../interfaces/papers";
 import {BehaviorSubject, catchError, finalize, map, Observable, of} from "rxjs";
 import {PapersService} from "../services/papers.service";
 import {HttpResponse} from "@angular/common/http";
@@ -31,24 +31,27 @@ export class PapersDataSource implements DataSource<IPaper> {
         this._loadingSubject$.complete();
     }
 
-    public loadPapers(
-        sort = '',
-        order = 'asc',
-        page = 0,
-        limit = 5,
-        type = '',
-        paperId = '',
-        showArchival = false
-    ) {
-        // json-server fix:
-        page += 1;
-        this._loadingSubject$.next(true);
-
-        if (paperId !== '') {
-            paperId = `^${paperId}`;
+    public loadPapers(params: IPaperSearchParams) {
+        const innerParams: IPaperSearchParams = {
+            sort: '',
+            order: 'asc',
+            page: 0,
+            limit: 5,
+            type: '',
+            paperId: '',
+            showArchival: false,
+            ...params
         }
 
-        this._papersService.getPapers(sort, order, page, limit, type, paperId, showArchival)
+        // json-server fix:
+        innerParams.page += 1;
+        this._loadingSubject$.next(true);
+
+        if (innerParams.paperId !== '') {
+            innerParams.paperId = `^${innerParams.paperId}`;
+        }
+
+        this._papersService.getPapers(innerParams)
             .pipe(
                 catchError(() => of([])),
                 map((papers) => papers as HttpResponse<any>),
