@@ -5,16 +5,17 @@ import {PapersService} from "../services/papers.service";
 import {HttpResponse} from "@angular/common/http";
 
 export class PapersDataSource implements DataSource<IPaper> {
-    private papersSubject = new BehaviorSubject<IPaper[]>([]);
-    private loadingSubject = new BehaviorSubject<boolean>(false);
-
-    public loading$ = this.loadingSubject.asObservable();
-
-    private _total: number = 0;
+    public get loading$() {
+        return this._loadingSubject$.asObservable();
+    }
 
     public get total() {
         return this._total;
     }
+
+    private _papersSubject$ = new BehaviorSubject<IPaper[]>([]);
+    private _loadingSubject$ = new BehaviorSubject<boolean>(false);
+    private _total: number = 0;
 
     constructor(
         private _papersService: PapersService
@@ -22,12 +23,12 @@ export class PapersDataSource implements DataSource<IPaper> {
     }
 
     public connect(collectionViewer: CollectionViewer): Observable<IPaper[]> {
-        return this.papersSubject.asObservable();
+        return this._papersSubject$.asObservable();
     }
 
     public disconnect(collectionViewer: CollectionViewer): void {
-        this.papersSubject.complete();
-        this.loadingSubject.complete();
+        this._papersSubject$.complete();
+        this._loadingSubject$.complete();
     }
 
     public loadPapers(
@@ -41,7 +42,7 @@ export class PapersDataSource implements DataSource<IPaper> {
     ) {
         // json-server fix:
         page += 1;
-        this.loadingSubject.next(true);
+        this._loadingSubject$.next(true);
 
         if (paperId !== '') {
             paperId = `^${paperId}`;
@@ -51,10 +52,10 @@ export class PapersDataSource implements DataSource<IPaper> {
             .pipe(
                 catchError(() => of([])),
                 map((papers) => papers as HttpResponse<any>),
-                finalize(() => this.loadingSubject.next(false)),
+                finalize(() => this._loadingSubject$.next(false)),
             ).subscribe((papers) => {
                 this._total = +papers.headers.getAll('X-Total-Count');
-                this.papersSubject.next(papers['body']);
+                this._papersSubject$.next(papers['body']);
             }
         );
     }

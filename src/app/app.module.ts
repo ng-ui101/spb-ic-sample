@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {PapersListComponent} from './components/document-list/papers-list.component';
+import {PapersListComponent} from './components/papers-list/papers-list.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";

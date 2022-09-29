@@ -13,7 +13,7 @@ export class PapersService {
     private readonly _url: string = null;
 
     constructor(
-        private http: HttpClient,
+        private _http: HttpClient,
         private _environmentService: EnvironmentService,
     ) {
         this._url = this._environmentService.getValue('apiUrl');
@@ -56,7 +56,7 @@ export class PapersService {
         * '/data', because with '/papers' url json-server will delete all papers
         * see bug info: https://github.com/typicode/json-server/issues/885
         */
-        return this.http.get(`${this._url}/data`, {
+        return this._http.get(`${this._url}/data`, {
             params: this._setHttpParams(sort, order, page, limit, type, paperId, showArchival),
             // to get the number of records:
             observe: 'response'
@@ -64,14 +64,14 @@ export class PapersService {
     }
 
     public deletePaper(paper: IPaper) {
-        return this.http.delete(`${this._url}/data/${paper.id}`);
+        return this._http.delete(`${this._url}/data/${paper.id}`);
     }
 
     public addPaper(paperData: any) {
-        return this.http.post(`${this._url}/data`, {...paperData, id: uuid()});
+        return this._http.post(`${this._url}/data`, {...paperData, id: uuid()});
     }
 
     public updatePaper(paper: IPaper) {
-        return this.http.put(`${this._url}/data/${paper.id}`, paper);
+        return this._http.put(`${this._url}/data/${paper.id}`, paper);
     }
 }

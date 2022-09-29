@@ -5,7 +5,7 @@ import {PaperType} from "../interfaces/papers";
     name: 'paperName'
 })
 export class PaperNamePipe implements PipeTransform {
-
+    // it is a stub:
     transform(value: unknown, ...args: unknown[]): unknown {
         switch (value) {
             case PaperType.Passport:

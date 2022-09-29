@@ -64,14 +64,14 @@ export class ControlPanelComponent implements OnDestroy {
     }
 
     public editPaper() {
-        this.openDialog(this.currentPaper);
+        this._openDialog(this.currentPaper);
     }
 
     public addPaper() {
-        this.openDialog();
+        this._openDialog();
     }
 
-    private openDialog(paper: IPaper = null) {
+    private _openDialog(paper: IPaper = null) {
         const dialogRef = this.dialog.open(PaperEditDialogComponent, {
             width: '1024px',
             data: paper || null,
