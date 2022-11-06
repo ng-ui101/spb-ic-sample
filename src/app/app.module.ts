@@ -27,6 +27,7 @@ import {TextMaskModule} from 'angular2-text-mask';
 import {getRuPaginator} from "./localization/mat-table-paginator";
 import {DepartmentsService, DepartmentsServiceStub} from "./services/departments.service";
 import {PapersService, PapersServiceStub} from "./services/papers.service";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import {PapersService, PapersServiceStub} from "./services/papers.service";
         ReactiveFormsModule,
         MatDialogModule,
         MatIconModule,
-        TextMaskModule
+        TextMaskModule,
+        NgSelectModule
     ],
     providers: [
         {provide: ENVIRONMENT, useValue: environment},

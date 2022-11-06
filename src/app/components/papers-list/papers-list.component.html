@@ -68,3 +68,9 @@
         aria-label="Select page of elements">
     </mat-paginator>
 </div>
+
+<ng-select
+    placeholder="page"
+    [items]="[1,2]"
+    (change)="changeFromSelect($event)"
+></ng-select>

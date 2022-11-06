@@ -127,5 +127,10 @@ export class PapersListComponent implements OnInit, AfterViewInit, OnDestroy {
             this._liveAnnouncer.announce('Сортировка очищена');
         }
     }
+
+    public changeFromSelect(e: any) {
+        this._paginator.pageIndex = --e
+        this.loadPage();
+    }
 }
 
